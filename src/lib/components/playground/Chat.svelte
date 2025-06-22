@@ -234,11 +234,12 @@
 
 						<div class="w-full">
 							<select
-								class="w-full bg-transparent border border-gray-100 dark:border-gray-850 rounded-lg py-1 px-2 -mx-0.5 text-sm outline-hidden"
+								class="w-full bg-transparent rounded-lg border border-gray-200 dark:border-gray-800 px-2 py-1.5 text-sm"
 								bind:value={selectedModelId}
 							>
+								<option value="">{$i18n.t('Select a model')}</option>
 								{#each $models as model}
-									<option value={model.id} class="bg-gray-50 dark:bg-gray-700">{model.name}</option>
+									<option value={model.id}>{model.alias || model.name}</option>
 								{/each}
 							</select>
 						</div>

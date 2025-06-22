@@ -1,0 +1,26 @@
+[
+  {
+    "title": ["Help me understand", "academic integrity policies"],
+    "content": "Can you explain the university's academic integrity policy regarding plagiarism and its consequences? I want to make sure I properly cite all my sources in my research paper."
+  },
+  {
+    "title": ["Explain the process", "for requesting academic accommodations"],
+    "content": "What is the university's policy and procedure for requesting academic accommodations due to a disability? What documentation is required and which office should I contact?"
+  },
+  {
+    "title": ["Summarize", "the student code of conduct"],
+    "content": "Could you provide a summary of the key points in our university's student code of conduct, particularly regarding on-campus behavior and disciplinary procedures?"
+  },
+  {
+    "title": ["Walk me through", "the grade appeal process"],
+    "content": "I'm considering appealing a grade I received. Can you explain the university's policy on grade appeals, including deadlines, required documentation, and the steps in the process?"
+  },
+  {
+    "title": ["Clarify the policy", "on research ethics and compliance"],
+    "content": "What are the university's policies regarding research involving human subjects? Please explain the IRB approval process and requirements for ethical research compliance."
+  },
+  {
+    "title": ["Help me navigate", "financial aid and scholarship policies"],
+    "content": "Can you explain the university's policies on maintaining scholarship eligibility, including GPA requirements, course load minimums, and renewal procedures?"
+  }
+]

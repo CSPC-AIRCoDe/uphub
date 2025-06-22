@@ -288,13 +288,7 @@
 						href={`/?models=${encodeURIComponent(model.id)}`}
 					>
 						<div class=" flex-1 self-center {model.is_active ? '' : 'text-gray-500'}">
-							<Tooltip
-								content={marked.parse(model?.meta?.description ?? model.id)}
-								className=" w-fit"
-								placement="top-start"
-							>
-								<div class=" font-semibold line-clamp-1">{model.name}</div>
-							</Tooltip>
+							<div class=" font-semibold line-clamp-1">{model.alias || model.name}</div>
 
 							<div class="flex gap-1 text-xs overflow-hidden">
 								<div class="line-clamp-1">

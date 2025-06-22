@@ -31,6 +31,7 @@
 	import AdjustmentsHorizontal from '$lib/components/icons/AdjustmentsHorizontal.svelte';
 	import Cube from '$lib/components/icons/Cube.svelte';
 	import { getChatById } from '$lib/apis/chats';
+	import type { SessionUser } from '$lib/types';
 
 	const i18n = getContext('i18n');
 
@@ -43,10 +44,31 @@
 	export let chat;
 	export let onClose: Function = () => {};
 
+	// Function to check if user has permission to use chat controls
+	function hasControlsPermission(user: SessionUser | null | undefined): boolean {
+		if (!user) return false; // Default to false if user is not defined
+		if (user.role === 'admin') return true; // Admin always has permission
+		return user.permissions?.chat?.controls === true; // Only true if explicitly set to true
+	}
+
+	// Function to check if user has permission to share chats
+	function hasSharePermission(user: SessionUser | null | undefined): boolean {
+		if (!user) return false; // Default to false if user is not defined
+		if (user.role === 'admin') return true; // Admin always has permission
+		return user.permissions?.chat?.share === true; // Only true if explicitly set to true
+	}
+
+	// Function to check if user has permission to export chats
+	function hasExportPermission(user: SessionUser | null | undefined): boolean {
+		if (!user) return false; // Default to false if user is not defined
+		if (user.role === 'admin') return true; // Admin always has permission
+		return user.permissions?.chat?.export === true; // Only true if explicitly set to true
+	}
+
 	const getChatAsText = async () => {
 		const history = chat.chat.history;
 		const messages = createMessagesList(history, history.currentId);
-		const chatText = messages.reduce((a, message, i, arr) => {
+		const chatText = messages.reduce((a: string, message: any, i: number, arr: any[]) => {
 			return `${a}### ${message.role.toUpperCase()}\n${message.content}\n\n`;
 		}, '');
 
@@ -248,7 +270,7 @@
 				<div class="flex items-center">{$i18n.t('Settings')}</div>
 			</DropdownMenu.Item> -->
 
-			{#if $mobile}
+			{#if $mobile && hasControlsPermission($user)}
 				<DropdownMenu.Item
 					class="flex gap-2 items-center px-3 py-2 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md select-none w-full"
 					id="chat-controls-button"
@@ -263,7 +285,7 @@
 				</DropdownMenu.Item>
 			{/if}
 
-			{#if !$temporaryChatEnabled && ($user?.role === 'admin' || ($user.permissions?.chat?.share ?? true))}
+			{#if !$temporaryChatEnabled && hasSharePermission($user)}
 				<DropdownMenu.Item
 					class="flex gap-2 items-center px-3 py-2 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md select-none w-full"
 					id="chat-share-button"
@@ -339,7 +361,7 @@
 					transition={flyAndScale}
 					sideOffset={8}
 				>
-					{#if $user?.role === 'admin' || ($user.permissions?.chat?.export ?? true)}
+					{#if hasExportPermission($user)}
 						<DropdownMenu.Item
 							class="flex gap-2 items-center px-3 py-2 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md select-none w-full"
 							on:click={() => {

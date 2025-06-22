@@ -46,24 +46,26 @@
 	<div class="flex flex-col -translate-x-1" bind:this={modelListElement}>
 		{#each modelIds as modelId, modelIdx (modelId)}
 			<div class=" flex gap-2 w-full justify-between items-center" id="model-item-{modelId}">
-				<Tooltip content={modelId} placement="top-start">
-					<div class="flex items-center gap-1">
-						<EllipsisVertical className="size-4 cursor-move item-handle" />
+				<div class="flex items-center gap-1">
+					<EllipsisVertical className="size-4 cursor-move item-handle" />
 
-						<div class=" text-sm flex-1 py-1 rounded-lg">
-							{#if $models.find((model) => model.id === modelId)}
-								{$models.find((model) => model.id === modelId).name}
+					<div class=" text-sm flex-1 py-1 rounded-lg">
+						{#if $models.find((model) => model.id === modelId)}
+							{#if $models.find((model) => model.id === modelId).alias}
+								{$models.find((model) => model.id === modelId).alias}
 							{:else}
-								{modelId}
+								{$models.find((model) => model.id === modelId).name}
 							{/if}
-						</div>
+						{:else}
+							{modelId}
+						{/if}
 					</div>
-				</Tooltip>
+				</div>
 			</div>
 		{/each}
 	</div>
 {:else}
 	<div class="text-gray-500 text-xs text-center py-2">
-		{$i18n.t('No models found')}
+		{i18n.t('No models found')}
 	</div>
 {/if}

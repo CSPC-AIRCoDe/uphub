@@ -552,7 +552,7 @@
 												: `${WEBUI_BASE_URL}/static/favicon.png`)}
 									/>
 									<div class="translate-y-[0.5px]">
-										Talking to <span class=" font-medium">{atSelectedModel.name}</span>
+										Talking to <span class=" font-medium">{atSelectedModel.alias || atSelectedModel.name}</span>
 									</div>
 								</div>
 								<div>

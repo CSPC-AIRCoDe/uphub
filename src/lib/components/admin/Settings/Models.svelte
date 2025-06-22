@@ -35,6 +35,7 @@
 	import EyeSlash from '$lib/components/icons/EyeSlash.svelte';
 	import Eye from '$lib/components/icons/Eye.svelte';
 	import { copyToClipboard } from '$lib/utils';
+	import EditAliasModal from './Models/EditAliasModal.svelte';
 
 	let shiftKey = false;
 
@@ -51,17 +52,21 @@
 
 	let showConfigModal = false;
 	let showManageModal = false;
+	let showEditAliasModal = false;
+	let selectedModelForAlias = null;
 
 	$: if (models) {
 		filteredModels = models
-			.filter((m) => searchValue === '' || m.name.toLowerCase().includes(searchValue.toLowerCase()))
+			.filter((m) => searchValue === '' || m.name.toLowerCase().includes(searchValue.toLowerCase()) || (m.alias && m.alias.toLowerCase().includes(searchValue.toLowerCase())))
 			.sort((a, b) => {
 				// // Check if either model is inactive and push them to the bottom
 				// if ((a.is_active ?? true) !== (b.is_active ?? true)) {
 				// 	return (b.is_active ?? true) - (a.is_active ?? true);
 				// }
 				// If both models' active states are the same, sort alphabetically
-				return a.name.localeCompare(b.name);
+				const aName = a.alias || a.name;
+				const bName = b.alias || b.name;
+				return aName.localeCompare(bName);
 			});
 	}
 
@@ -203,6 +208,11 @@
 		saveAs(blob, `${model.id}-${Date.now()}.json`);
 	};
 
+	const editAliasHandler = async (model) => {
+		selectedModelForAlias = model;
+		showEditAliasModal = true;
+	};
+
 	onMount(async () => {
 		await init();
 
@@ -236,6 +246,19 @@
 
 <ConfigureModelsModal bind:show={showConfigModal} initHandler={init} />
 <ManageModelsModal bind:show={showManageModal} />
+<EditAliasModal 
+	bind:show={showEditAliasModal} 
+	model={selectedModelForAlias} 
+	onSave={async () => {
+		await init();
+		_models.set(
+			await getModels(
+				localStorage.token,
+				$config?.features?.enable_direct_connections && ($settings?.directConnections ?? null)
+			)
+		);
+	}} 
+/>
 
 {#if models !== null}
 	{#if selectedModelId === null}
@@ -334,19 +357,7 @@
 							</div>
 
 							<div class=" flex-1 self-center {(model?.is_active ?? true) ? '' : 'text-gray-500'}">
-								<Tooltip
-									content={marked.parse(
-										!!model?.meta?.description
-											? model?.meta?.description
-											: model?.ollama?.digest
-												? `${model?.ollama?.digest} **(${model?.ollama?.modified_at})**`
-												: model.id
-									)}
-									className=" w-fit"
-									placement="top-start"
-								>
-									<div class="  font-semibold line-clamp-1">{model.name}</div>
-								</Tooltip>
+								<div class="  font-semibold line-clamp-1">{model.alias || model.name}</div>
 								<div class=" text-xs overflow-hidden text-ellipsis line-clamp-1 text-gray-500">
 									<span class=" line-clamp-1">
 										{!!model?.meta?.description
@@ -402,6 +413,9 @@
 								<ModelMenu
 									user={$user}
 									{model}
+									onClose={() => {
+										//
+									}}
 									exportHandler={() => {
 										exportModelHandler(model);
 									}}
@@ -411,7 +425,9 @@
 									copyLinkHandler={() => {
 										copyLinkHandler(model);
 									}}
-									onClose={() => {}}
+									editAliasHandler={() => {
+										editAliasHandler(model);
+									}}
 								>
 									<button
 										class="self-center w-fit text-sm p-1.5 dark:text-gray-300 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-xl"

@@ -267,29 +267,27 @@
 				>
 					<div class="flex items-center text-left">
 						<div class=" flex-1 self-center">
-							<Tooltip content={tool?.meta?.description ?? ''} placement="top-start">
-								<div class=" font-semibold flex items-center gap-1.5">
-									<div
-										class=" text-xs font-bold px-1 rounded-sm uppercase line-clamp-1 bg-gray-500/20 text-gray-700 dark:text-gray-200"
-									>
-										TOOL
-									</div>
-
-									{#if tool?.meta?.manifest?.version}
-										<div
-											class="text-xs font-bold px-1 rounded-sm line-clamp-1 bg-gray-500/20 text-gray-700 dark:text-gray-200"
-										>
-											v{tool?.meta?.manifest?.version ?? ''}
-										</div>
-									{/if}
-
-									<div class="line-clamp-1">
-										{tool.name}
-
-										<span class=" text-gray-500 text-xs font-medium shrink-0">{tool.id}</span>
-									</div>
+							<div class=" font-semibold flex items-center gap-1.5">
+								<div
+									class=" text-xs font-bold px-1 rounded-sm uppercase line-clamp-1 bg-gray-500/20 text-gray-700 dark:text-gray-200"
+								>
+									TOOL
 								</div>
-							</Tooltip>
+
+								{#if tool?.meta?.manifest?.version}
+									<div
+										class="text-xs font-bold px-1 rounded-sm line-clamp-1 bg-gray-500/20 text-gray-700 dark:text-gray-200"
+									>
+										v{tool?.meta?.manifest?.version ?? ''}
+									</div>
+								{/if}
+
+								<div class="line-clamp-1">
+									{tool.name}
+
+									<span class=" text-gray-500 text-xs font-medium shrink-0">{tool.id}</span>
+								</div>
+							</div>
 
 							<div class="px-0.5">
 								<div class="flex gap-1.5 mt-0.5 mb-0.5">

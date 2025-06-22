@@ -117,6 +117,7 @@
 	async function setLogoImage() {
 		await tick();
 		const logo = document.getElementById('logo');
+		const mainLogo = document.getElementById('main-logo');
 
 		if (logo) {
 			const isDarkMode = document.documentElement.classList.contains('dark');
@@ -126,13 +127,16 @@
 				darkImage.src = '/static/favicon-dark.png';
 
 				darkImage.onload = () => {
-					logo.src = '/static/favicon-dark.png';
+					logo.setAttribute('src', '/static/favicon-dark.png');
+					if (mainLogo) mainLogo.setAttribute('src', '/static/uphubicon.png');
 					logo.style.filter = ''; // Ensure no inversion is applied if favicon-dark.png exists
 				};
 
 				darkImage.onerror = () => {
 					logo.style.filter = 'invert(1)'; // Invert image if favicon-dark.png is missing
 				};
+			} else {
+				if (mainLogo) mainLogo.setAttribute('src', '/static/uphubicon.png');
 			}
 		}
 	}
@@ -165,7 +169,7 @@
 	bind:show={onboarding}
 	getStartedHandler={() => {
 		onboarding = false;
-		mode = $config?.features.enable_ldap ? 'ldap' : 'signup';
+		mode = $config?.features?.['enable_ldap'] ? 'ldap' : 'signup';
 	}}
 />
 
@@ -208,9 +212,19 @@
 						</div>
 					</div>
 				{:else}
-					<div class="  my-auto pb-10 w-full dark:text-gray-100">
+					<div class="my-auto pb-10 w-full dark:text-gray-100">
+						<div class="flex justify-center mb-8">
+							<img
+								id="main-logo"
+								crossorigin="anonymous"
+								src="{WEBUI_BASE_URL}/static/uphubicon.png"
+								class="w-24 h-24"
+								alt="{$WEBUI_NAME} Logo"
+							/>
+						</div>
+						
 						<form
-							class=" flex flex-col justify-center"
+							class="flex flex-col justify-center"
 							on:submit={(e) => {
 								e.preventDefault();
 								submitHandler();
@@ -227,6 +241,9 @@
 									{:else}
 										{$i18n.t(`Sign up to {{WEBUI_NAME}}`, { WEBUI_NAME: $WEBUI_NAME })}
 									{/if}
+								</div>
+								<div class="mt-1 text-lg font-medium text-gray-600 dark:text-gray-500">
+									CSPC - University Policy Hub
 								</div>
 
 								{#if $config?.onboarding ?? false}

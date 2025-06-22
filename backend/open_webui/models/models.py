@@ -68,6 +68,11 @@ class Model(Base):
         The human-readable display name of the model.
     """
 
+    alias = Column(Text, nullable=True)
+    """
+        An optional custom display name/alias for the model. If provided, this will be shown instead of the name.
+    """
+
     params = Column(JSONField)
     """
         Holds a JSON encoded blob of parameters, see `ModelParams`.
@@ -107,6 +112,7 @@ class ModelModel(BaseModel):
     base_model_id: Optional[str] = None
 
     name: str
+    alias: Optional[str] = None
     params: ModelParams
     meta: ModelMeta
 
@@ -136,6 +142,7 @@ class ModelForm(BaseModel):
     id: str
     base_model_id: Optional[str] = None
     name: str
+    alias: Optional[str] = None
     meta: ModelMeta
     params: ModelParams
     access_control: Optional[dict] = None

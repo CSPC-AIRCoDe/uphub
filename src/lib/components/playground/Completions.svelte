@@ -128,15 +128,15 @@
 					<div class="flex w-full">
 						<div class="overflow-hidden w-full">
 							<div class="max-w-full">
-								<Selector
-									placeholder={$i18n.t('Select a model')}
-									items={$models.map((model) => ({
-										value: model.id,
-										label: model.name,
-										model: model
-									}))}
+								<select
+									class="w-full bg-transparent rounded-lg border border-gray-200 dark:border-gray-800 px-2 py-1.5 text-sm"
 									bind:value={selectedModelId}
-								/>
+								>
+									<option value="">{$i18n.t('Select a model')}</option>
+									{#each $models as model}
+										<option value={model.id}>{model.alias || model.name}</option>
+									{/each}
+								</select>
 							</div>
 						</div>
 					</div>

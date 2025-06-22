@@ -111,29 +111,22 @@
 				<div class="flex shrink-0 justify-center">
 					<div class="flex -space-x-4 mb-0.5" in:fade={{ duration: 100 }}>
 						{#each models as model, modelIdx}
-							<Tooltip
-								content={(models[modelIdx]?.info?.meta?.tags ?? [])
-									.map((tag) => tag.name.toUpperCase())
-									.join(', ')}
-								placement="top"
+							<button
+								on:click={() => {
+									selectedModelIdx = modelIdx;
+								}}
 							>
-								<button
-									on:click={() => {
-										selectedModelIdx = modelIdx;
-									}}
-								>
-									<img
-										crossorigin="anonymous"
-										src={model?.info?.meta?.profile_image_url ??
-											($i18n.language === 'dg-DG'
-												? `/doge.png`
-												: `${WEBUI_BASE_URL}/static/favicon.png`)}
-										class=" size-9 @sm:size-10 rounded-full border-[1px] border-gray-100 dark:border-none"
-										alt="logo"
-										draggable="false"
-									/>
-								</button>
-							</Tooltip>
+								<img
+									crossorigin="anonymous"
+									src={model?.info?.meta?.profile_image_url ??
+										($i18n.language === 'dg-DG'
+											? `/doge.png`
+											: `${WEBUI_BASE_URL}/static/favicon.png`)}
+									class=" size-9 @sm:size-10 rounded-full border-[1px] border-gray-100 dark:border-none"
+									alt="logo"
+									draggable="false"
+								/>
+							</button>
 						{/each}
 					</div>
 				</div>
@@ -142,16 +135,10 @@
 					class=" text-3xl @sm:text-3xl line-clamp-1 flex items-center"
 					in:fade={{ duration: 100 }}
 				>
-					{#if models[selectedModelIdx]?.name}
-						<Tooltip
-							content={models[selectedModelIdx]?.name}
-							placement="top"
-							className=" flex items-center "
-						>
-							<span class="line-clamp-1">
-								{models[selectedModelIdx]?.name}
-							</span>
-						</Tooltip>
+					{#if models[selectedModelIdx]?.alias}
+						<span class="line-clamp-1">
+							{models[selectedModelIdx]?.alias}
+						</span>
 					{:else}
 						{$i18n.t('Hello, {{name}}', { name: $user?.name })}
 					{/if}
@@ -161,21 +148,13 @@
 			<div class="flex mt-1 mb-2">
 				<div in:fade={{ duration: 100, delay: 50 }}>
 					{#if models[selectedModelIdx]?.info?.meta?.description ?? null}
-						<Tooltip
-							className=" w-fit"
-							content={marked.parse(
-								sanitizeResponseContent(models[selectedModelIdx]?.info?.meta?.description ?? '')
-							)}
-							placement="top"
+						<div
+							class="mt-0.5 px-2 text-sm font-normal text-gray-500 dark:text-gray-400 line-clamp-2 max-w-xl markdown"
 						>
-							<div
-								class="mt-0.5 px-2 text-sm font-normal text-gray-500 dark:text-gray-400 line-clamp-2 max-w-xl markdown"
-							>
-								{@html marked.parse(
-									sanitizeResponseContent(models[selectedModelIdx]?.info?.meta?.description)
-								)}
-							</div>
-						</Tooltip>
+							{@html marked.parse(
+								sanitizeResponseContent(models[selectedModelIdx]?.info?.meta?.description)
+							)}
+						</div>
 
 						{#if models[selectedModelIdx]?.info?.meta?.user}
 							<div class="mt-0.5 text-sm font-normal text-gray-400 dark:text-gray-500">

@@ -462,6 +462,10 @@
 	};
 
 	onMount(async () => {
+		// Apply UPHub background
+		document.body.classList.add('uphub-bg');
+		// document.body.style.backgroundImage = 'url("/uphub_bg.png")';
+
 		if (typeof window !== 'undefined' && window.applyTheme) {
 			window.applyTheme();
 		}
@@ -668,7 +672,7 @@
 {/if}
 
 <Toaster
-	theme={$theme.includes('dark')
+	theme={$theme && $theme.includes('dark')
 		? 'dark'
 		: $theme === 'system'
 			? window.matchMedia('(prefers-color-scheme: dark)').matches

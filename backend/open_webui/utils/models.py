@@ -36,8 +36,13 @@ log.setLevel(SRC_LOG_LEVELS["MAIN"])
 
 async def fetch_ollama_models(request: Request, user: UserModel = None):
     raw_ollama_models = await ollama.get_all_models(request, user=user)
-    return [
-        {
+    models_list = []
+    
+    for model in raw_ollama_models["models"]:
+        # Check if there's a custom model with the same ID
+        custom_model = Models.get_model_by_id(model["model"])
+        
+        model_data = {
             "id": model["model"],
             "name": model["name"],
             "object": "model",
@@ -47,13 +52,31 @@ async def fetch_ollama_models(request: Request, user: UserModel = None):
             "connection_type": model.get("connection_type", "local"),
             "tags": model.get("tags", []),
         }
-        for model in raw_ollama_models["models"]
-    ]
+        
+        # Add alias if custom model exists
+        if custom_model:
+            model_data["alias"] = custom_model.alias
+            
+        models_list.append(model_data)
+    
+    return models_list
 
 
 async def fetch_openai_models(request: Request, user: UserModel = None):
     openai_response = await openai.get_all_models(request, user=user)
-    return openai_response["data"]
+    models_list = []
+    
+    for model in openai_response["data"]:
+        # Check if there's a custom model with the same ID
+        custom_model = Models.get_model_by_id(model["id"])
+        
+        # Add alias if custom model exists
+        if custom_model and custom_model.alias:
+            model["alias"] = custom_model.alias
+            
+        models_list.append(model)
+    
+    return models_list
 
 
 async def get_all_base_models(request: Request, user: UserModel = None):
@@ -87,35 +110,50 @@ async def get_all_models(request, user: UserModel = None):
     if request.app.state.config.ENABLE_EVALUATION_ARENA_MODELS:
         arena_models = []
         if len(request.app.state.config.EVALUATION_ARENA_MODELS) > 0:
-            arena_models = [
-                {
-                    "id": model["id"],
-                    "name": model["name"],
+            arena_models = []
+            for model_config in request.app.state.config.EVALUATION_ARENA_MODELS:
+                # Check if there's a custom model with the same ID
+                custom_model = Models.get_model_by_id(model_config["id"])
+                
+                model_data = {
+                    "id": model_config["id"],
+                    "name": model_config["name"],
                     "info": {
-                        "meta": model["meta"],
+                        "meta": model_config["meta"],
                     },
                     "object": "model",
                     "created": int(time.time()),
                     "owned_by": "arena",
                     "arena": True,
                 }
-                for model in request.app.state.config.EVALUATION_ARENA_MODELS
-            ]
+                
+                # Add alias if custom model exists
+                if custom_model and custom_model.alias:
+                    model_data["alias"] = custom_model.alias
+                    
+                arena_models.append(model_data)
         else:
             # Add default arena model
-            arena_models = [
-                {
-                    "id": DEFAULT_ARENA_MODEL["id"],
-                    "name": DEFAULT_ARENA_MODEL["name"],
-                    "info": {
-                        "meta": DEFAULT_ARENA_MODEL["meta"],
-                    },
-                    "object": "model",
-                    "created": int(time.time()),
-                    "owned_by": "arena",
-                    "arena": True,
-                }
-            ]
+            # Check if there's a custom model with the same ID
+            custom_model = Models.get_model_by_id(DEFAULT_ARENA_MODEL["id"])
+            
+            model_data = {
+                "id": DEFAULT_ARENA_MODEL["id"],
+                "name": DEFAULT_ARENA_MODEL["name"],
+                "info": {
+                    "meta": DEFAULT_ARENA_MODEL["meta"],
+                },
+                "object": "model",
+                "created": int(time.time()),
+                "owned_by": "arena",
+                "arena": True,
+            }
+            
+            # Add alias if custom model exists
+            if custom_model and custom_model.alias:
+                model_data["alias"] = custom_model.alias
+                
+            arena_models = [model_data]
         models = models + arena_models
 
     global_action_ids = [
@@ -147,6 +185,7 @@ async def get_all_models(request, user: UserModel = None):
                 ):
                     if custom_model.is_active:
                         model["name"] = custom_model.name
+                        model["alias"] = custom_model.alias
                         model["info"] = custom_model.model_dump()
 
                         # Set action_ids and filter_ids
@@ -163,6 +202,7 @@ async def get_all_models(request, user: UserModel = None):
 
                         model["action_ids"] = action_ids
                         model["filter_ids"] = filter_ids
+                        model["is_active"] = custom_model.is_active
                     else:
                         models.remove(model)
 
@@ -198,6 +238,7 @@ async def get_all_models(request, user: UserModel = None):
                 {
                     "id": f"{custom_model.id}",
                     "name": custom_model.name,
+                    "alias": custom_model.alias,
                     "object": "model",
                     "created": custom_model.created_at,
                     "owned_by": owned_by,
@@ -206,6 +247,7 @@ async def get_all_models(request, user: UserModel = None):
                     **({"pipe": pipe} if pipe is not None else {}),
                     "action_ids": action_ids,
                     "filter_ids": filter_ids,
+                    "is_active": custom_model.is_active,
                 }
             )
 

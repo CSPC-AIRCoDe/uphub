@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { DropdownMenu } from 'bits-ui';
 	import { flyAndScale } from '$lib/utils/transitions';
-	import { getContext } from 'svelte';
+	import i18n from '$lib/i18n';
 
 	import Dropdown from '$lib/components/common/Dropdown.svelte';
 	import GarbageBin from '$lib/components/icons/GarbageBin.svelte';
@@ -17,16 +17,15 @@
 	import { config } from '$lib/stores';
 	import Link from '$lib/components/icons/Link.svelte';
 
-	const i18n = getContext('i18n');
-
 	export let user;
 	export let model;
 
-	export let exportHandler: Function;
-	export let hideHandler: Function;
-	export let copyLinkHandler: Function;
+	export let exportHandler = () => {};
+	export let hideHandler = () => {};
+	export let copyLinkHandler = () => {};
+	export let editAliasHandler = () => {};
 
-	export let onClose: Function;
+	export let onClose = () => {};
 
 	let show = false;
 </script>
@@ -52,7 +51,17 @@
 			transition={flyAndScale}
 		>
 			<DropdownMenu.Item
-				class="flex  gap-2  items-center px-3 py-2 text-sm  font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
+				class="flex gap-2 items-center px-3 py-2 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
+				on:click={() => {
+					editAliasHandler();
+				}}
+			>
+				<Pencil />
+				<div class="flex items-center">{$i18n.t('Edit Alias')}</div>
+			</DropdownMenu.Item>
+
+			<DropdownMenu.Item
+				class="flex gap-2 items-center px-3 py-2 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
 				on:click={() => {
 					hideHandler();
 				}}
@@ -104,24 +113,22 @@
 			</DropdownMenu.Item>
 
 			<DropdownMenu.Item
-				class="flex gap-2 items-center px-3 py-2 text-sm  font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
+				class="flex gap-2 items-center px-3 py-2 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
 				on:click={() => {
 					copyLinkHandler();
 				}}
 			>
 				<Link />
-
 				<div class="flex items-center">{$i18n.t('Copy Link')}</div>
 			</DropdownMenu.Item>
 
 			<DropdownMenu.Item
-				class="flex gap-2 items-center px-3 py-2 text-sm  font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
+				class="flex gap-2 items-center px-3 py-2 text-sm font-medium cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md"
 				on:click={() => {
 					exportHandler();
 				}}
 			>
 				<ArrowDownTray />
-
 				<div class="flex items-center">{$i18n.t('Export')}</div>
 			</DropdownMenu.Item>
 		</DropdownMenu.Content>

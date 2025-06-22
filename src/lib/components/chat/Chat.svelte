@@ -1099,7 +1099,7 @@
 				done: true,
 
 				model: modelId,
-				modelName: model.name ?? model.id,
+				modelName: model.alias || model.name || model.id,
 				modelIdx: 0,
 				timestamp: Math.floor(Date.now() / 1000)
 			};
@@ -1159,7 +1159,7 @@
 					childrenIds: [],
 					done: true,
 					model: model.id,
-					modelName: model.name ?? model.id,
+					modelName: model.alias || model.name || model.id,
 					modelIdx: 0,
 					timestamp: Math.floor(Date.now() / 1000),
 					...message
@@ -1477,7 +1477,7 @@
 					role: 'assistant',
 					content: '',
 					model: model.id,
-					modelName: model.name ?? model.id,
+					modelName: model.alias || model.name || model.id,
 					modelIdx: modelIdx ? modelIdx : _modelIdx,
 					timestamp: Math.floor(Date.now() / 1000) // Unix epoch
 				};
@@ -1526,7 +1526,7 @@
 					if (hasImages && !(model.info?.meta?.capabilities?.vision ?? true)) {
 						toast.error(
 							$i18n.t('Model {{modelName}} is not vision capable', {
-								modelName: model.name ?? model.id
+								modelName: model.alias || model.name || model.id
 							})
 						);
 					}
@@ -1991,6 +1991,12 @@
 				await chats.set(await getChatList(localStorage.token, $currentChatPage));
 			}
 		}
+	};
+
+	const getModelName = (modelId) => {
+		const model = $models.find((m) => m.id === modelId);
+		if (!model) return modelId;
+		return model.alias || model.name;
 	};
 </script>
 

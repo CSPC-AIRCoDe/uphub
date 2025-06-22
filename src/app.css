@@ -34,6 +34,15 @@ html {
 	word-break: break-word;
 }
 
+/* UPHub Background Image */
+body.uphub-bg {
+	background-image: url('/uphub_bg.png'), url('/static/uphub_bg.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+	background-size: contain;
+}
+
 code {
 	/* white-space-collapse: preserve !important; */
 	overflow-x: auto;

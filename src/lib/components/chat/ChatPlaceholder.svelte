@@ -44,23 +44,16 @@
 							selectedModelIdx = modelIdx;
 						}}
 					>
-						<Tooltip
-							content={marked.parse(
-								sanitizeResponseContent(models[selectedModelIdx]?.info?.meta?.description ?? '')
-							)}
-							placement="right"
-						>
-							<img
-								crossorigin="anonymous"
-								src={model?.info?.meta?.profile_image_url ??
-									($i18n.language === 'dg-DG'
-										? `/doge.png`
-										: `${WEBUI_BASE_URL}/static/favicon.png`)}
-								class=" size-[2.7rem] rounded-full border-[1px] border-gray-100 dark:border-none"
-								alt="logo"
-								draggable="false"
-							/>
-						</Tooltip>
+						<img
+							crossorigin="anonymous"
+							src={model?.info?.meta?.profile_image_url ??
+								($i18n.language === 'dg-DG'
+									? `/doge.png`
+									: `${WEBUI_BASE_URL}/static/favicon.png`)}
+							class=" size-[2.7rem] rounded-full border-[1px] border-gray-100 dark:border-none"
+							alt="logo"
+							draggable="false"
+						/>
 					</button>
 				{/each}
 			</div>
@@ -68,7 +61,7 @@
 
 		{#if $temporaryChatEnabled}
 			<Tooltip
-				content={$i18n.t('This chat won’t appear in history and your messages will not be saved.')}
+				content={$i18n.t("This chat won't appear in history and your messages will not be saved.")}
 				className="w-full flex justify-start mb-0.5"
 				placement="top"
 			>
@@ -83,11 +76,13 @@
 		>
 			<div>
 				<div class=" capitalize line-clamp-1" in:fade={{ duration: 200 }}>
-					{#if models[selectedModelIdx]?.name}
+					'{#if models[selectedModelIdx]?.alias}
+						{models[selectedModelIdx]?.alias}
+					{:else if models[selectedModelIdx]?.name}
 						{models[selectedModelIdx]?.name}
 					{:else}
 						{$i18n.t('Hello, {{name}}', { name: $user?.name })}
-					{/if}
+					{/if}'
 				</div>
 
 				<div in:fade={{ duration: 200, delay: 200 }}>

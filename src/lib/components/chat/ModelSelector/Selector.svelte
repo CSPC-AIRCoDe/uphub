@@ -80,13 +80,19 @@
 			const _item = {
 				...item,
 				modelName: item.model?.name,
+				modelAlias: item.model?.alias,
 				tags: (item.model?.tags ?? []).map((tag) => tag.name).join(' '),
 				desc: item.model?.info?.meta?.description
 			};
 			return _item;
 		}),
 		{
-			keys: ['value', 'tags', 'modelName'],
+			keys: [
+				{ name: 'modelAlias', weight: 2 },
+				{ name: 'modelName', weight: 1.5 },
+				'value',
+				'tags'
+			],
 			threshold: 0.4
 		}
 	);
@@ -525,23 +531,16 @@
 				{/each}
 
 				{#if !(searchValue.trim() in $MODEL_DOWNLOAD_POOL) && searchValue && ollamaVersion && $user?.role === 'admin'}
-					<Tooltip
-						content={$i18n.t(`Pull "{{searchValue}}" from Ollama.com`, {
-							searchValue: searchValue
-						})}
-						placement="top-start"
+					<button
+						class="flex w-full font-medium line-clamp-1 select-none items-center rounded-button py-2 pl-3 pr-1.5 text-sm text-gray-700 dark:text-gray-100 outline-hidden transition-all duration-75 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer data-highlighted:bg-muted"
+						on:click={() => {
+							pullModelHandler();
+						}}
 					>
-						<button
-							class="flex w-full font-medium line-clamp-1 select-none items-center rounded-button py-2 pl-3 pr-1.5 text-sm text-gray-700 dark:text-gray-100 outline-hidden transition-all duration-75 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg cursor-pointer data-highlighted:bg-muted"
-							on:click={() => {
-								pullModelHandler();
-							}}
-						>
-							<div class=" truncate">
-								{$i18n.t(`Pull "{{searchValue}}" from Ollama.com`, { searchValue: searchValue })}
-							</div>
-						</button>
-					</Tooltip>
+						<div class=" truncate">
+							{$i18n.t(`Pull "{{searchValue}}" from Ollama.com`, { searchValue: searchValue })}
+						</div>
+					</button>
 				{/if}
 
 				{#each Object.keys($MODEL_DOWNLOAD_POOL) as model}

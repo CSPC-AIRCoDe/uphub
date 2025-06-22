@@ -7,16 +7,23 @@
 		<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
 		<link rel="shortcut icon" href="/static/favicon.ico" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png" />
-		<meta name="apple-mobile-web-app-title" content="Open WebUI" />
-
+		<meta name="apple-mobile-web-app-title" content="UPHub" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<link rel="manifest" href="/manifest.json" crossorigin="use-credentials" />
 		<meta
 			name="viewport"
-			content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+			content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
 		/>
-		<meta name="theme-color" content="#171717" />
-		<meta name="robots" content="noindex,nofollow" />
-		<meta name="description" content="Open WebUI" />
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="description" content="UPHub" />
+		<meta property="og:image"
+			content="%sveltekit.assets%/static/favicon-96x96.png" 
+			title="UPHub"
+			alt="Icon" />
 		<link
 			rel="search"
 			type="application/opensearchdescription+xml"
@@ -33,76 +40,65 @@
 		</script>
 
 		<script>
-			// On page load or when changing themes, best to add inline in `head` to avoid FOUC
-			(() => {
-				const metaThemeColorTag = document.querySelector('meta[name="theme-color"]');
-				const prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+			/* DARK THEME DETECTION */
+			const darkModeClass = "dark";
+			const herModeClass = "her";
 
-				if (!localStorage?.theme) {
-					localStorage.theme = 'system';
+			const handleColorSchemeChange = e => {
+				const darkModeOn = e?.matches;
+				document.documentElement.classList[darkModeOn ? "add" : "remove"](darkModeClass);
+
+				if (!darkModeOn) {
+					document.documentElement.classList.remove(herModeClass);
 				}
+			};
 
-				if (localStorage.theme === 'system') {
-					document.documentElement.classList.add(prefersDarkTheme ? 'dark' : 'light');
-					metaThemeColorTag.setAttribute('content', prefersDarkTheme ? '#171717' : '#ffffff');
-				} else if (localStorage.theme === 'oled-dark') {
-					document.documentElement.style.setProperty('--color-gray-800', '#101010');
-					document.documentElement.style.setProperty('--color-gray-850', '#050505');
-					document.documentElement.style.setProperty('--color-gray-900', '#000000');
-					document.documentElement.style.setProperty('--color-gray-950', '#000000');
-					document.documentElement.classList.add('dark');
-					metaThemeColorTag.setAttribute('content', '#000000');
-				} else if (localStorage.theme === 'light') {
-					document.documentElement.classList.add('light');
-					metaThemeColorTag.setAttribute('content', '#ffffff');
-				} else if (localStorage.theme === 'her') {
-					document.documentElement.classList.add('dark');
-					document.documentElement.classList.add('her');
-					metaThemeColorTag.setAttribute('content', '#983724');
-				} else {
-					document.documentElement.classList.add('dark');
-					metaThemeColorTag.setAttribute('content', '#171717');
+			const mql = window.matchMedia("(prefers-color-scheme: dark)");
+			handleColorSchemeChange(mql);
+			mql.addEventListener("change", handleColorSchemeChange);
+
+			// Handle "her" theme from localStorage
+			try {
+				const theme = localStorage.getItem("theme");
+				if (theme === "her") {
+					document.documentElement.classList.add(darkModeClass);
+					document.documentElement.classList.add(herModeClass);
+				} else if (theme === "light") {
+					document.documentElement.classList.remove(darkModeClass);
+					document.documentElement.classList.remove(herModeClass);
+				} else if (theme === "dark") {
+					document.documentElement.classList.add(darkModeClass);
+					document.documentElement.classList.remove(herModeClass);
 				}
+			} catch (e) {
+				console.error(e);
+			}
 
-				window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
-					if (localStorage.theme === 'system') {
-						if (e.matches) {
-							document.documentElement.classList.add('dark');
-							document.documentElement.classList.remove('light');
-							metaThemeColorTag.setAttribute('content', '#171717');
-						} else {
-							document.documentElement.classList.add('light');
-							document.documentElement.classList.remove('dark');
-							metaThemeColorTag.setAttribute('content', '#ffffff');
-						}
-					}
-				});
+			// Handle splash screen
+			function setSplashImage() {
+				const isDarkMode = document.documentElement.classList.contains(darkModeClass);
+				const isHerMode = document.documentElement.classList.contains(herModeClass);
 
-				function setSplashImage() {
-					const logo = document.getElementById('logo');
-					const isDarkMode = document.documentElement.classList.contains('dark');
-
-					if (isDarkMode) {
-						const darkImage = new Image();
-						darkImage.src = '/static/splash-dark.png';
-
-						darkImage.onload = () => {
-							logo.src = '/static/splash-dark.png';
-							logo.style.filter = ''; // Ensure no inversion is applied if splash-dark.png exists
-						};
-
-						darkImage.onerror = () => {
-							logo.style.filter = 'invert(1)'; // Invert image if splash-dark.png is missing
-						};
-					}
+				// Try to load the dark splash image if we're in dark mode
+				if (isDarkMode) {
+					const darkImage = new Image();
+					darkImage.src = '/static/splash-dark.png';
+					darkImage.onload = () => {
+						const logo = document.getElementById('splash-logo');
+						logo.src = '/static/splash-dark.png';
+						logo.style.filter = ''; // Ensure no inversion is applied if splash-dark.png exists
+					};
+					darkImage.onerror = () => {
+						const logo = document.getElementById('splash-logo');
+						logo.style.filter = 'invert(1)'; // Invert image if splash-dark.png is missing
+					};
 				}
+			}
 
-				// Runs after classes are assigned
-				window.onload = setSplashImage;
-			})();
+			window.onload = setSplashImage;
 		</script>
 
-		<title>Open WebUI</title>
+		<title>UPHub</title>
 
 		%sveltekit.head%
 	</head>
@@ -121,7 +117,7 @@
 			</style>
 
 			<img
-				id="logo"
+				id="splash-logo"
 				style="
 					position: absolute;
 					width: auto;

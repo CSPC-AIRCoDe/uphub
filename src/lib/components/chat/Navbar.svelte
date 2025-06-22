@@ -29,6 +29,7 @@
 
 	import PencilSquare from '../icons/PencilSquare.svelte';
 	import Banner from '../common/Banner.svelte';
+	import type { SessionUser } from '$lib/types';
 
 	const i18n = getContext('i18n');
 
@@ -43,6 +44,13 @@
 
 	let showShareChatModal = false;
 	let showDownloadChatModal = false;
+
+	// Function to check if user has permission to use chat controls
+	function hasControlsPermission(user: SessionUser | null | undefined): boolean {
+		if (!user) return false; // Default to false if user is not defined
+		if (user.role === 'admin') return true; // Admin always has permission
+		return user.permissions?.chat?.controls === true; // Only true if explicitly set to true
+	}
 </script>
 
 <ShareChatModal bind:show={showShareChatModal} chatId={$chatId} />
@@ -148,19 +156,21 @@
 						</Menu>
 					{/if}
 
-					<Tooltip content={$i18n.t('Controls')}>
-						<button
-							class=" flex cursor-pointer px-2 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-850 transition"
-							on:click={async () => {
-								await showControls.set(!$showControls);
-							}}
-							aria-label="Controls"
-						>
-							<div class=" m-auto self-center">
-								<AdjustmentsHorizontal className=" size-5" strokeWidth="0.5" />
-							</div>
-						</button>
-					</Tooltip>
+					{#if hasControlsPermission($user)}
+						<Tooltip content={$i18n.t('Controls')}>
+							<button
+								class=" flex cursor-pointer px-2 py-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-850 transition"
+								on:click={async () => {
+									await showControls.set(!$showControls);
+								}}
+								aria-label="Controls"
+							>
+								<div class=" m-auto self-center">
+									<AdjustmentsHorizontal className=" size-5" strokeWidth="0.5" />
+								</div>
+							</button>
+						</Tooltip>
+					{/if}
 
 					{#if $user !== undefined && $user !== null}
 						<UserMenu

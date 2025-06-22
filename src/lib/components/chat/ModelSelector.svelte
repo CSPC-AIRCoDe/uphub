@@ -55,7 +55,7 @@
 						placeholder={$i18n.t('Select a model')}
 						items={$models.map((model) => ({
 							value: model.id,
-							label: model.name,
+							label: model.alias || model.name,
 							model: model
 						}))}
 						showTemporaryChatControl={$user?.role === 'user'

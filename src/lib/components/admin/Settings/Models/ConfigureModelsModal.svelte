@@ -215,7 +215,7 @@
 										<option value="">{$i18n.t('Select a model')}</option>
 										{#each $models as model}
 											<option value={model.id} class="bg-gray-50 dark:bg-gray-700"
-												>{model.name}</option
+												>{model.alias || model.name}</option
 											>
 										{/each}
 									</select>
@@ -228,7 +228,7 @@
 										{#each defaultModelIds as modelId, modelIdx}
 											<div class=" flex gap-2 w-full justify-between items-center">
 												<div class=" text-sm flex-1 py-1 rounded-lg">
-													{$models.find((model) => model.id === modelId)?.name}
+													{$models.find((model) => model.id === modelId)?.alias || $models.find((model) => model.id === modelId)?.name}
 												</div>
 												<div class="shrink-0">
 													<button
