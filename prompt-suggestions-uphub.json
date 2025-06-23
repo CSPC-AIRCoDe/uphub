@@ -78,5 +78,25 @@
   {
     "title": ["Explain how to", "access CSPC health services"],
     "content": "How can I access health services at CSPC? What medical services are provided by the Health Services Unit and what are their operating hours?"
+  },
+  {
+    "title": ["Provide information on", "campus security at CSPC"],
+    "content": "What security measures are in place at CSPC? How do I report security concerns, and what emergency services are available on campus?"
+  },
+  {
+    "title": ["Tell me about", "study abroad opportunities at CSPC"],
+    "content": "What study abroad or exchange programs does CSPC offer? What are the eligibility requirements and application process for international academic experiences?"
+  },
+  {
+    "title": ["Guide me through", "student housing options at CSPC"],
+    "content": "What on-campus and off-campus housing options are available for CSPC students? What are the costs, facilities, and application procedures for dormitories?"
+  },
+  {
+    "title": ["Help me access", "mental health resources at CSPC"],
+    "content": "What mental health and counseling services does CSPC provide? How can I schedule an appointment with a counselor, and are these services confidential?"
+  },
+  {
+    "title": ["Explain how to", "use CSPC technology resources"],
+    "content": "What technology resources and computer laboratories are available to CSPC students? How do I access campus Wi-Fi, printing services, and software licenses?"
   }
 ]
