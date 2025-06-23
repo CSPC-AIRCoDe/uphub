@@ -884,25 +884,31 @@
 						{$i18n.t('Chat Background Image')}
 					</div>
 
-					<button
-						aria-labelledby="chat-background-label"
-						class="p-1 px-3 text-xs flex rounded-sm transition"
-						on:click={() => {
-							if (backgroundImageUrl !== null) {
+					<div class="flex gap-2">
+						<button
+							aria-label="Reset to default background"
+							class="p-1 px-3 text-xs flex rounded-sm transition"
+							on:click={() => {
+								// Reset to default chat-bg.png (null value)
 								backgroundImageUrl = null;
 								saveSettings({ backgroundImageUrl });
-							} else {
+							}}
+							type="button"
+						>
+							<span class="ml-2 self-center">{$i18n.t('Default')}</span>
+						</button>
+						<button
+							aria-labelledby="chat-background-label"
+							class="p-1 px-3 text-xs flex rounded-sm transition"
+							on:click={() => {
+								// Open file picker for custom background
 								filesInputElement.click();
-							}
-						}}
-						type="button"
-					>
-						{#if backgroundImageUrl !== null}
-							<span class="ml-2 self-center">{$i18n.t('Reset')}</span>
-						{:else}
-							<span class="ml-2 self-center">{$i18n.t('Upload')}</span>
-						{/if}
-					</button>
+							}}
+							type="button"
+						>
+							<span class="ml-2 self-center">{$i18n.t('Custom')}</span>
+						</button>
+					</div>
 				</div>
 			</div>
 

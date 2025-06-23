@@ -611,9 +611,9 @@
 
 		<div class="flex-auto w-0 pl-1 relative -translate-y-0.5">
 			<Name>
-				<Tooltip content={model?.name ?? message.model} placement="top-start">
+				<Tooltip content={model?.alias || model?.name || message.model} placement="top-start">
 					<span class="line-clamp-1 text-black dark:text-white">
-						{model?.name ?? message.model}
+						{model?.alias || model?.name || message.model}
 					</span>
 				</Tooltip>
 
