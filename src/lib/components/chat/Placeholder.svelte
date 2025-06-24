@@ -86,6 +86,13 @@
 	}
 
 	$: models = selectedModels.map((id) => $_models.find((m) => m.id === id));
+	
+	function handleImageError(e: Event) {
+		const target = e.target as HTMLImageElement;
+		if (target) {
+			target.src = '/static/favicon.png';
+		}
+	}
 
 	onMount(() => {});
 </script>
@@ -121,7 +128,8 @@
 									src={model?.info?.meta?.profile_image_url ??
 										($i18n.language === 'dg-DG'
 											? `/doge.png`
-											: `${WEBUI_BASE_URL}/static/favicon.png`)}
+											: `/static/favicon.png`)}
+									on:error={handleImageError}
 									class=" size-9 @sm:size-10 rounded-full border-[1px] border-gray-100 dark:border-none"
 									alt="logo"
 									draggable="false"
@@ -137,7 +145,8 @@
 				>
 					{#if models[selectedModelIdx]?.alias}
 						<span class="line-clamp-1">
-							{models[selectedModelIdx]?.alias}
+							<!-- {models[selectedModelIdx]?.alias} -->
+							{$i18n.t('Hello, {{name}}', { name: $user?.name })}
 						</span>
 					{:else}
 						{$i18n.t('Hello, {{name}}', { name: $user?.name })}

@@ -113,6 +113,13 @@ class UsersTable:
         oauth_sub: Optional[str] = None,
     ) -> Optional[UserModel]:
         with get_db() as db:
+            # Initialize default settings with background image path
+            default_settings = UserSettings(
+                ui={
+                    "backgroundImageUrl": "/static/chat-bg.png"
+                }
+            )
+            
             user = UserModel(
                 **{
                     "id": id,
@@ -124,6 +131,7 @@ class UsersTable:
                     "created_at": int(time.time()),
                     "updated_at": int(time.time()),
                     "oauth_sub": oauth_sub,
+                    "settings": default_settings,
                 }
             )
             result = User(**user.model_dump())

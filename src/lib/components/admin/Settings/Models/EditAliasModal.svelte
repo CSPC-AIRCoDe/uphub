@@ -3,7 +3,7 @@
 	import i18n from '$lib/i18n';
 
 	import Modal from '$lib/components/common/Modal.svelte';
-	import { updateModelById } from '$lib/apis/models';
+	import { updateModelById, getModelById, createNewModel } from '$lib/apis/models';
 
 	export let show = false;
 	export let model = null;
@@ -24,9 +24,46 @@
 		loading = true;
 
 		try {
+			// First check if the model exists in the database
+			const existingModel = await getModelById(localStorage.token, model.id).catch(() => null);
+			
+			let modelToUpdate = model;
+			
+			// If model doesn't exist in the database, create it first
+			if (!existingModel) {
+				// Create a new model in the database
+				const newModel = await createNewModel(localStorage.token, {
+					id: model.id,
+					name: model.name,
+					alias: alias.trim() || null,
+					meta: model.meta || {},
+					params: model.params || {},
+					access_control: model.access_control || {},
+					is_active: true
+				}).catch(error => {
+					console.error("Error creating model:", error);
+					return null;
+				});
+				
+				if (newModel) {
+					toast.success($i18n.t('Model added to database'));
+					onSave(newModel);
+					show = false;
+					loading = false;
+					return;
+				} else {
+					toast.error($i18n.t('Failed to add model to database'));
+					loading = false;
+					return;
+				}
+			}
+			
+			// Update existing model with new alias
 			const updatedModel = {
-				...model,
-				alias: alias.trim() || null // If empty string, set to null
+				...(existingModel || model),
+				alias: alias.trim() || null, // If empty string, set to null
+				meta: model.meta || {},
+				params: model.params || {}
 			};
 			
 			const res = await updateModelById(localStorage.token, model.id, updatedModel);

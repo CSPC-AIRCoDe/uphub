@@ -32,6 +32,13 @@
 	onMount(() => {
 		mounted = true;
 	});
+	
+	function handleImageError(e: Event) {
+		const target = e.target as HTMLImageElement;
+		if (target) {
+			target.src = '/static/favicon.png';
+		}
+	}
 </script>
 
 {#key mounted}
@@ -49,7 +56,8 @@
 							src={model?.info?.meta?.profile_image_url ??
 								($i18n.language === 'dg-DG'
 									? `/doge.png`
-									: `${WEBUI_BASE_URL}/static/favicon.png`)}
+									: `/static/favicon.png`)}
+							on:error={handleImageError}
 							class=" size-[2.7rem] rounded-full border-[1px] border-gray-100 dark:border-none"
 							alt="logo"
 							draggable="false"
@@ -77,7 +85,7 @@
 			<div>
 				<div class=" capitalize line-clamp-1" in:fade={{ duration: 200 }}>
 					'{#if models[selectedModelIdx]?.alias}
-						{models[selectedModelIdx]?.alias}
+						{ models[selectedModelIdx]?.alias}
 					{:else if models[selectedModelIdx]?.name}
 						{models[selectedModelIdx]?.name}
 					{:else}
