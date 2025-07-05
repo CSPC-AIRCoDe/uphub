@@ -40,7 +40,7 @@
 
 {#if show}
 	<div class="w-full h-screen max-h-[100dvh] text-white relative">
-		<div class="fixed m-10 z-50">
+		<!-- <div class="fixed m-10 z-50">
 			<div class="flex space-x-2">
 				<div class=" self-center">
 					<img
@@ -52,7 +52,7 @@
 					/>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 		<SlideShow duration={5000} />
 

@@ -1,102 +1,86 @@
 [
   {
-    "title": ["Help me understand", "CSPC academic integrity policies"],
-    "content": "Can you explain CSPC's academic integrity policy regarding plagiarism and its consequences? I want to make sure I properly cite all my sources in my research paper for my course at the College of Computer Studies."
+    "title": ["Clarify the guidelines", "on faculty research incentives at CSPC"],
+    "content": "Can you explain the guidelines and criteria used by CSPC for granting incentives to faculty members involved in research activities, particularly under the PSUB Research and Development Awards? I'm interested in understanding the qualifications, awards categories, evaluation criteria, and the benefits for winning researchers."
   },
   {
-    "title": ["Explain the process", "for requesting academic accommodations at CSPC"],
-    "content": "What is CSPC's policy and procedure for requesting academic accommodations due to a disability? What documentation is required and which office at CSPC should I contact?"
+    "title": ["Explain the policies", "on intellectual property rights at CSPC"],
+    "content": "Could you clarify CSPC's policies on intellectual property rights, especially for faculty who create research outputs, inventions, or publications?"
   },
   {
-    "title": ["Summarize", "the CSPC student code of conduct"],
-    "content": "Could you provide a summary of the key points in CSPC's student handbook, particularly regarding on-campus behavior and disciplinary procedures?"
+    "title": ["Guide me through", "faculty sabbatical leave procedures at CSPC"],
+    "content": "How does a faculty member at CSPC qualify for and apply for a sabbatical leave? Please explain the procedures, requirements, and duration."
   },
   {
-    "title": ["Walk me through", "the grade appeal process at CSPC"],
-    "content": "I'm considering appealing a grade I received at CSPC. Can you explain the college's policy on grade appeals, including deadlines, required documentation, and the steps in the process?"
+    "title": ["Clarify the guidelines", "for records management at CSPC"],
+    "content": "What are the guidelines for maintaining, accessing, and disposing of records at CSPC according to the Records Management System?"
   },
   {
-    "title": ["Clarify the policy", "on research ethics at CSPC"],
-    "content": "What are CSPC's policies regarding research through the Center for Research and Development? Please explain the approval process and requirements for ethical research compliance."
+    "title": ["Explain the process", "for promotion and ranking of CSPC faculty"],
+    "content": "Can you detail the criteria and procedure used by CSPC for faculty promotion and ranking according to the merit selection plan?"
   },
   {
-    "title": ["Help me navigate", "CSPC financial aid and scholarship policies"],
-    "content": "Can you explain CSPC's policies on maintaining scholarship eligibility, including GPA requirements, course load minimums, and renewal procedures?"
+    "title": ["Help me understand", "CSPC guidelines on incentives for student-athletes"],
+    "content": "What incentives does CSPC provide for student-athletes and coaches who win sports competitions? Explain the policies and criteria involved."
   },
   {
-    "title": ["Guide me through", "CSPC admission requirements"],
-    "content": "What are the requirements and procedures for undergraduate admission at CSPC? I'm interested in applying to the College of Computer Studies."
+    "title": ["Summarize the policy", "on faculty workload and teaching load at CSPC"],
+    "content": "What are CSPC's guidelines regarding faculty workload, teaching load requirements, and how teaching overload is computed?"
   },
   {
-    "title": ["Explain how to", "register for classes at CSPC"],
-    "content": "What's the process for course registration at CSPC? Are there any specific deadlines or prerequisites I should be aware of for the upcoming semester?"
+    "title": ["Guide me through", "the CSPC policy for electronic records management"],
+    "content": "How does CSPC manage electronic records, including creation, maintenance, security, and disposal, according to institutional guidelines?"
   },
   {
-    "title": ["Tell me about", "student organizations at CSPC"],
-    "content": "What student organizations are available at CSPC? How can I join college-based and institutional-based organizations as mentioned on the website?"
+    "title": ["Explain the policy", "on granting research-based extension activities at CSPC"],
+    "content": "What criteria and guidelines does CSPC follow for conducting research-based extension programs, and how are faculty members recognized for these efforts?"
   },
   {
-    "title": ["Help me understand", "CSPC Learning Management System"],
-    "content": "How do I use the Learning Online Space (LeOnS) and Student Information and Accounting System (SIAS) at CSPC? What resources are available for technical support?"
+    "title": ["Help me understand", "the professional conduct expected from CSPC faculty"],
+    "content": "Could you explain the expectations regarding professional conduct for faculty members at CSPC, including relationships with administration, colleagues, students, parents, and the community?"
   },
   {
-    "title": ["Explain the process", "for TESDA competency assessment at CSPC"],
-    "content": "How can I undergo TESDA competency assessment at CSPC's Accredited Competency Assessment Center? What certifications are available and what are the requirements?"
+    "title": ["Clarify CSPC’s policy", "on the faculty cooperative membership and benefits"],
+    "content": "What are the benefits, guidelines, and eligibility criteria for faculty membership in the CSPC Multi-Purpose Cooperative?"
   },
   {
-    "title": ["Guide me through", "graduation requirements at CSPC"],
-    "content": "What are the graduation requirements for my degree program at CSPC? What documents do I need to submit and what deadlines should I be aware of?"
+    "title": ["Explain the process", "for availing graduate study scholarships at CSPC"],
+    "content": "Could you guide me through the procedures, eligibility criteria, and benefits for faculty who wish to apply for scholarships for graduate studies under CSPC’s Learning and Development Program?"
   },
   {
-    "title": ["Tell me about", "CSPC campus facilities"],
-    "content": "What facilities are available to students at CSPC? I'm particularly interested in learning about the library, computer laboratories, and sports facilities."
+    "title": ["Summarize the benefits", "and incentives provided to CSPC faculty"],
+    "content": "Please explain the various benefits, privileges, incentives, and awards available to faculty members at CSPC, including the eligibility and application processes."
   },
   {
-    "title": ["Explain the opportunities", "for international students at CSPC"],
-    "content": "What support services and visa application assistance does CSPC offer for international students through the Center for International Relations and Linkages?"
+    "title": ["Guide me through", "CSPC's grievance and disciplinary procedures"],
+    "content": "What procedures does CSPC follow when addressing grievances and disciplinary cases involving faculty members? Explain the steps and responsible offices."
   },
   {
-    "title": ["Help me understand", "the research opportunities at CSPC"],
-    "content": "What research opportunities are available for undergraduate students at CSPC through the Center for Research and Development? How can I get involved?"
+    "title": ["Help me understand", "faculty recruitment and appointment policy at CSPC"],
+    "content": "Can you clarify CSPC’s policy and procedures for recruiting, selecting, and appointing new faculty members, including minimum qualifications?"
   },
   {
-    "title": ["Clarify the policy", "on student attendance at CSPC"],
-    "content": "What is CSPC's policy on class attendance and absences? How many absences are allowed before it affects my academic standing?"
+    "title": ["Clarify the guidelines", "for the use of CSPC's Staff House in Cubao"],
+    "content": "What are the guidelines and procedures for faculty and staff who wish to stay at CSPC's Staff House in Cubao, Quezon City? Include information on fees, reservations, and check-in/check-out rules."
   },
   {
-    "title": ["Guide me through", "transferring credits to CSPC"],
-    "content": "What is the process for transferring credits from another institution to CSPC? Which office should I contact and what documentation is required?"
+    "title": ["Explain how to", "avail of CSPC’s financial assistance for thesis and dissertation"],
+    "content": "Could you detail the guidelines, eligibility criteria, and benefits for CSPC faculty members who wish to avail financial assistance for their thesis or dissertation writing?"
   },
   {
-    "title": ["Tell me about", "career services at CSPC"],
-    "content": "What career counseling and job placement services does CSPC offer to students and recent graduates? How can I access these services?"
+    "title": ["Summarize the policies", "on maternity, paternity, and parental leave at CSPC"],
+    "content": "What leave benefits are available at CSPC for maternity, paternity, and parental leave? Explain the eligibility criteria and application procedures."
   },
   {
-    "title": ["Help me navigate", "graduate program application at CSPC"],
-    "content": "What are the requirements and procedures for applying to CSPC's Graduate School programs? What documents do I need to prepare?"
+    "title": ["Guide me through", "the policies for handling electronic mail and digital signatures at CSPC"],
+    "content": "How does CSPC manage and secure electronic mail communications and digital signatures for official use? Explain the relevant guidelines and requirements."
   },
   {
-    "title": ["Explain how to", "access CSPC health services"],
-    "content": "How can I access health services at CSPC? What medical services are provided by the Health Services Unit and what are their operating hours?"
+    "title": ["Explain the policy", "on study leave in preparation for board exams at CSPC"],
+    "content": "What are the eligibility requirements and procedures at CSPC for faculty members seeking a study leave to prepare for licensure or board examinations?"
   },
   {
-    "title": ["Provide information on", "campus security at CSPC"],
-    "content": "What security measures are in place at CSPC? How do I report security concerns, and what emergency services are available on campus?"
-  },
-  {
-    "title": ["Tell me about", "study abroad opportunities at CSPC"],
-    "content": "What study abroad or exchange programs does CSPC offer? What are the eligibility requirements and application process for international academic experiences?"
-  },
-  {
-    "title": ["Guide me through", "student housing options at CSPC"],
-    "content": "What on-campus and off-campus housing options are available for CSPC students? What are the costs, facilities, and application procedures for dormitories?"
-  },
-  {
-    "title": ["Help me access", "mental health resources at CSPC"],
-    "content": "What mental health and counseling services does CSPC provide? How can I schedule an appointment with a counselor, and are these services confidential?"
-  },
-  {
-    "title": ["Explain how to", "use CSPC technology resources"],
-    "content": "What technology resources and computer laboratories are available to CSPC students? How do I access campus Wi-Fi, printing services, and software licenses?"
+    "title": ["Clarify the procedures", "for requesting compensatory time-off at CSPC"],
+    "content": "How can faculty and staff at CSPC request compensatory time-off for rendered overtime service? Explain the guidelines, eligibility, and maximum allowable time-off."
   }
 ]
